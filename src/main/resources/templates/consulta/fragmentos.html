@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>TechShop</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+
+        <!-- 1 Sección para crear los filtros -->
+        <section th:fragment="filtros" class="bg-light">
+            <div class="row py-2">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <form method="POST" th:action="@{/consulta/query1}" 
+                          class="was-validated">
+                        <div class="card">                            
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="precioInf">Precio Inferior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioInf}"
+                                           th:name="precioInf" required="true"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precioSup">Precio Superior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioSup}"
+                                           th:name="precioSup" required="true"/>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Filtrar Métodos
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="col-md-3">
+                    <form method="POST" th:action="@{/consulta/query2}" 
+                          class="was-validated">
+                        <div class="card">                            
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="precioInf">Precio Inferior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioInf}"
+                                           th:name="precioInf" required="true"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precioSup">Precio Superior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioSup}"
+                                           th:name="precioSup" required="true"/>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Filtrar @Query JPA
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                 <div class="col-md-3">
+                    <form method="POST" th:action="@{/consulta/query3}" 
+                          class="was-validated">
+                        <div class="card">                            
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="precioInf">Precio Inferior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioInf}"
+                                           th:name="precioInf" required="true"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precioSup">Precio Superior</label>
+                                    <input type="number" class="form-control" 
+                                           th:value="${precioSup}"
+                                           th:name="precioSup" required="true"/>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Filtrar @Query Nativo
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2 Sección principal para mostrar la informacion de la entidad articulo Filtrada-->
+        <section th:fragment="listadoFiltrado" id="articulos">
+            <div class="container">
+                <div class="row py-2">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Listado de Articulos Filtrados</h4>
+                            </div>
+                            <div th:if="${articulos != null and !articulos.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr><th class="text-center">#</th>
+                                            <th>Descripcion</th>
+                                            <th class="text-center">Precio</th>
+                                            <th class="text-center">Existencias</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="articulo, contador : ${articulos}">
+                                            <td class="text-center">[[${contador.count}]]</td>
+                                            <td>[[${articulo.descripcion}]]</td>                                            
+                                            <td class="text-end">¢[[${#numbers.formatDecimal(articulo.precio, 1, 'DEFAULT', 2, 'DEFAULT')}]]</td>
+                                            <td class="text-center">[[${articulo.existencias}]]</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center" th:if="${articulos == null or articulos.empty}">
+                                <span>Lista vacía</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </section>        
+    </body>
+</html>
